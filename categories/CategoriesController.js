@@ -17,10 +17,18 @@ router.post("/categories/save", (req, res) => {
         }).then(() => {
             res.redirect("/");
         });
-
     } else {
         res.redirect("/admin/categories/new");
     }
 });
 
+
+router.get("/admin/categories", (req,res) => {
+    //Função findAll irá buscar no banco as categorias existentes e o método then irá retornar as categorias encontradas
+    Category.findAll().then(categories => {
+        res.render("admin/categories/index", {categories: categories});
+    });
+
+    
+});
 module.exports = router;
