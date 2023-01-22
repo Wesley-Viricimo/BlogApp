@@ -28,7 +28,26 @@ router.get("/admin/categories", (req,res) => {
     Category.findAll().then(categories => {
         res.render("admin/categories/index", {categories: categories});
     });
-
-    
 });
+
+router.post("/categories/delete", (req, res) => {
+    let id = req.body.id;//Recebendo o id da categoria que irá ser deletada;
+
+    if(id != undefined){
+        if(!isNaN(id)){//Verifica se o valor é numérico ou não
+            Category.destroy({ //Deletar a categoria que tenha o id no banco de dados igual ao id recuperado na requisição;
+                where: {
+                    id: id
+                }
+            }).then(() => {
+                res.redirect("/admin/categories");
+            });
+        } else { //Se o id não for numérico
+            res.redirect("/admin/categories");
+        }
+    } else { //Se o id for nulo
+        res.redirect("/admin/categories");
+    }
+});
+
 module.exports = router;
