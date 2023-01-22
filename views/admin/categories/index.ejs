@@ -3,35 +3,34 @@
 <div class="container">
     <hr>
     <h2>Categoria</h2>
-    <a class="btn btn-success" href="/admin/categories/new">Criar nova categoria</a>
+    <a class="btn btn-success" href="/admin/categories/new">Criar nova categoria</a><!--Botão irá redirecionar para a rota de criação de categoria-->
     <hr>
-    <table class="table table-bordered">
-        <thead>
+    <table class="table table-bordered"><!--Criação da tabela HTML com estilização do bootstrap-->
+        <thead><!--Cabeçalho da tabela-->
             <tr>
-                <th>ID</th>
+                <th>ID</th><!--Criação do cabeçalho com as informações estáticas da tabela-->
                 <th>Título</th>
                 <th>Slug</th>
                 <th>Ações</th>
             </tr>
         </thead>
-        <tbody>
-            
+        <tbody><!--Corpo da tabela-->
             <tr>
-                <% categories.forEach(category => { %>
+                <% categories.forEach(category => { %> <!--ForEach que irá percorrer por todos os registros da tabela de categorias-->
                     <tr>
-                        <th><%= category.id %></th>
+                        <th><%= category.id %></th> <!--Criação do corpo da tabela com as informações da tabela de categorias-->
                         <th><%= category.title %></th>
                         <th><%= category.slug %></th>
-                        <th>
+                        <th><!--Início da coluna de ações da tabela HTML de categorias-->
                            <button class="btn btn-warning">Editar</button> 
                            
-                           <form method="POST" action="/categories/delete" style="display: inline;">
-                                <input type="hidden" name="id" value="<%= category.id %>">
-                                <button class="btn btn-danger">Deletar</button>
+                           <form method="POST" action="/categories/delete" style="display: inline;"><!--Formulário para enviar o id da categoria para a rota /categories/delete-->
+                                <input type="hidden" name="id" value="<%= category.id %>"><!--Input do tipo hidden que irá conter o valor do id da categoria desejada-->
+                                <button class="btn btn-danger">Deletar</button><!--Botão que irá deletar a categoria-->
                            </form> 
-                        </th>
+                        </th><!--Fim da coluna de ações-->
                     </tr>
-                <% }) %>
+                <% }) %><!--Fim do ForEach-->
             </tr>
         </tbody>
     </table>
