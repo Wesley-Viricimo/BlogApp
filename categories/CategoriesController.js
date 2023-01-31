@@ -16,7 +16,7 @@ router.post("/categories/save", (req, res) => {
             title: title, //Na coluna titulos salvar o titulo informado pelo usuario
             slug: slugify(title) //Na coluna slug, transformar a string titulo em uma slug
         }).then(() => { //Após salvar as informações no banco de dados, redirecionar para a rota principal
-            res.redirect("/");
+            res.redirect("/admin/categories");
         });
     } else { //Se o título receber valor indefinido redirecionar para a rota de criação de categorias
         res.redirect("/admin/categories/new");
@@ -49,6 +49,25 @@ router.post("/categories/delete", (req, res) => {
     } else { //Se o id for nulo
         res.redirect("/admin/categories");
     }
+});
+
+router.get("/admin/categories/edit/:id", (req, res) => {
+    let id = req.params.id;// Recebendo o id da categoria como parâmetro e atribuindo à variável
+
+    if(isNaN(id)) {
+        res.redirect("/admin/categories");
+    }
+
+    // Procurando um id que seja igual ao id recebido como parâmetro
+    Category.findByPk(id).then(category => { // Ao encontrar enviar esta categoria encontrada
+        if(id != undefined){ // Se o id for diferente de indefinido
+            res.render("admin/categories/edit",{category: category});
+        } else { // Se for valor indefinido redirecionar para a rota de categorias
+            res.render("/admin/categories");
+        }
+    }).catch(erro => { // Se der erro redirecionar para a rota de categorias
+        res.redirect("/admin/categories");
+    });
 });
 
 module.exports = router;

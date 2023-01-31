@@ -22,9 +22,10 @@
                         <th><%= category.title %></th>
                         <th><%= category.slug %></th>
                         <th><!--Início da coluna de ações da tabela HTML de categorias-->
-                           <button class="btn btn-warning">Editar</button> 
+                           <a href="/admin/categories/edit/<%= category.id %>" class="btn btn-warning">Editar</a> 
                            
-                           <form method="POST" action="/categories/delete" style="display: inline;"><!--Formulário para enviar o id da categoria para a rota /categories/delete-->
+                           <!--Formulário para enviar o id da categoria para a rota /categories/delete-->
+                           <form method="POST" action="/categories/delete" style="display: inline;" onsubmit="confirmarDelecao(event, this)"><!--onSubmit do formulário indica o que irá acontecer ao ser enviado-->
                                 <input type="hidden" name="id" value="<%= category.id %>"><!--Input do tipo hidden que irá conter o valor do id da categoria desejada-->
                                 <button class="btn btn-danger">Deletar</button><!--Botão que irá deletar a categoria-->
                            </form> 
@@ -35,4 +36,14 @@
         </tbody>
     </table>
 </div>
-    <%-include('../../partials/footer.ejs') %>
+<%-include('../../partials/footer.ejs') %>
+
+<script>
+    function confirmarDelecao(event, form) { //Recebendo o evento e o formulário como parâmetros
+        event.preventDefault(); //Previnindo a ação comum de ser enviado o formulário
+        const decision = confirm("Você quer deletar esta categoria?");
+        if(decision){ //Se da decisão for verdadeira
+            form.submit(); //Enviar o formulário
+        } 
+    }
+</script>
