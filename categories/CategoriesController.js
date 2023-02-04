@@ -70,4 +70,19 @@ router.get("/admin/categories/edit/:id", (req, res) => {
     });
 });
 
+router.post("/categories/update", (req, res) => {
+    let id = req.body.id; //Recebendo o id da categoria via formulário
+    let title = req.body.title;//Recebendo o título da categoria via formulário
+
+    Category.update({//Editar o título e slug da categoria
+        title: title,
+        slug: slugify(title)}, 
+        { where: {
+            id: id //Onde o id do banco de dados é igual ao id recebido do formulário
+        }
+    }).then(() => {
+        res.redirect("/admin/categories");
+    })
+});
+
 module.exports = router;
