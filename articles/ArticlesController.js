@@ -5,7 +5,11 @@ const slugify = require("slugify");
 const Article = require("./Article");
 
 router.get("/admin/articles", (req,res) => {
-    res.send("ROTA DE ARTIGOS");
+    Article.findAll({
+        include: [{model: Category}]//JOIN DE ARTIGO COM CATEGORIA - Incluindo os dados do model de categorias na busca de artigos 
+    }).then((articles) => {
+        res.render("admin/articles/index", {articles: articles});
+    })
 });
 
 router.get("/admin/articles/new", (req,res) => {

@@ -1,0 +1,41 @@
+<%-include('../../partials/header.ejs') %>
+    <%-include('../../partials/navbar.ejs') %>
+<div class="container">
+    <hr>
+    <h2>Artigos</h2>
+    <a class="btn btn-success" href="/admin/articles/new">Criar novo artigo</a><!--Botão irá redirecionar para a rota de criação de categoria-->
+    <hr>
+    <table class="table table-bordered"><!--Criação da tabela HTML com estilização do bootstrap-->
+        <thead><!--Cabeçalho da tabela-->
+            <tr>
+                <th>ID</th><!--Criação do cabeçalho com as informações estáticas da tabela-->
+                <th>Título</th>
+                <th>Slug</th>
+                <th>Categoria</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody><!--Corpo da tabela-->
+            <% articles.forEach(article => { %>
+            <tr>
+                <td><%= article.id %></td>
+                <td><%= article.title %></td>
+                <td><%= article.slug %></td>
+                <td><%= article.category.title %></td>
+                <td>Ações</td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+<%-include('../../partials/footer.ejs') %>
+
+<script>
+    function confirmarDelecao(event, form) { //Recebendo o evento e o formulário como parâmetros
+        event.preventDefault(); //Previnindo a ação comum de ser enviado o formulário
+        const decision = confirm("Você quer deletar este artigo?");
+        if(decision){ //Se da decisão for verdadeira
+            form.submit(); //Enviar o formulário
+        } 
+    }
+</script>
