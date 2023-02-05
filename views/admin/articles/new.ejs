@@ -8,25 +8,34 @@
                     <h2>Novo artigo</h2>
                 </div>
                 <div class="card-body">
-                    <form method="POST">
-                        <input class="form-control" type="text" name="title" placeholder="Defina o título do artigo"> <br>
-                        <textarea class="form-control" placeholder="Escreva o artigo aqui" name="body" id="article"></textarea> <br>
+                    <form method="POST" action="/articles/save">
+                        <input class="form-control" type="text" name="title" placeholder="Defina o título do artigo"> 
+                        <br>
+                        <textarea class="form-control" placeholder="Escreva o artigo aqui" name="body" id="article"></textarea> 
+                        <br>
+                        <label>Selecione uma categoria para escrever o artigo</label>
+                        <select name="category" class="form-control">
+                            <% categories.forEach((category) => { %>
+                                <option value="<%= category.id %>"><%= category.title %></option>
+                            <% }) %>
+                        </select> 
+                        <br>
                         <button class="btn btn-success">Cadastrar</button>
                     </form>
                 </div>
             </div>
-
         </div>
 
 <%-include('../../partials/footer.ejs') %>
 
-<script src="/tinymce/tinymce.min.js"></script>
+<script src="/tinymce/tinymce.min.js"></script> <!--Rerefenciando arquivo par utilizar tinymce-->
 
 <script>
 
-    tinymce.init({
-        selector: "#article",
-        plugins: 'advlist autolink link image lists print preview searchreplace fullscreen insertdatetime media save table paste emotions'
+    tinymce.init({ //Inicializando tinymce
+        language: 'pt_BR',
+        selector: "#article", //Referenciando o Id da textarea que irá receber a configuração do tinymce
+        plugins: 'advlist autolink link image lists print preview searchreplace fullscreen insertdatetime media save table paste emotions' //Adicionando plugins ao tinymce
         
     });
 
