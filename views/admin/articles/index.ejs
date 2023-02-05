@@ -22,7 +22,13 @@
                 <td><%= article.title %></td>
                 <td><%= article.slug %></td>
                 <td><%= article.category.title %></td>
-                <td>Ações</td>
+                <td>
+                    <!--Formulário para enviar o id do artigo para a rota /articles/delete-->
+                    <form method="POST" action="/articles/delete" style="display: inline;" onsubmit="confirmarDelecao(event, this)"><!--onSubmit do formulário indica o que irá acontecer ao ser enviado-->
+                        <input type="hidden" name="id" value="<%= article.id %>"><!--Input do tipo hidden que irá conter o valor do id do artigo desejado-->
+                        <button class="btn btn-danger">Deletar</button><!--Botão que irá deletar o artigo-->
+                   </form> 
+                </td>
             </tr>
             <% }) %>
         </tbody>

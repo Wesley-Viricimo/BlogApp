@@ -35,7 +35,26 @@ router.post("/articles/save", (req, res) => {
     } else {
         res.redirect("admin/articles/new");
     }
-    
-})
+});
+
+router.post("/articles/delete", (req, res) => {
+    let id = req.body.id;//Recebendo o id da categoria que irá ser deletada
+
+    if(id != undefined) {
+        if(!isNaN(id)){//Verifica se o valor é numérico ou não
+            Article.destroy({ //Deletar a categoria que tenha o id no banco de dados igual ao id recuperado na requisição
+                where: {
+                    id: id
+                }
+            }).then(() => {
+                res.redirect("/admin/articles");
+            });
+        } else { //Se o id não for numérico
+            res.redirect("/admin/articles");
+        }
+    } else { //Se o id for nulo
+        res.redirect("/admin/articles");
+    }
+});
 
 module.exports = router;
