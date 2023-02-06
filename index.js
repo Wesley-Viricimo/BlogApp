@@ -32,10 +32,31 @@ app.use("/", categoriesController);
 app.use("/", articlesController);    
 
 app.get("/", (req, res) => {
-    Article.findAll().then(articles => {
+    Article.findAll({
+        order:[
+            ['id', 'DESC']
+        ]
+    }).then(articles => {
         res.render("index", {articles: articles})
     });
 });
+
+app.get("/:slug", (req, res) => {
+    let slug = req.params.slug;
+    Article.findOne({ //Procurar um artigo com a slug que o usuário informar na rota
+        where:{
+            slug: slug
+        }
+    }).then(article => {
+        if(article != undefined){
+            res.render("article", {article: article});
+        } else {
+            res.redirect("/");
+        }
+    }).catch(err => { //Se der algum erro
+        res.redirect("/");
+    })
+})
 
 app.listen(8080, () => {
     console.log("O servidor está rodando");

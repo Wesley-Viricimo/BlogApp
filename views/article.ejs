@@ -1,0 +1,17 @@
+<%-include('partials/header.ejs') %>
+<%-include('partials/homenavbar.ejs') %>
+    <body>
+    <body>
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h2><%= article.title %></h2>
+                </div>
+                <div class="card-body">
+                    <h2><%- article.body %></h2><!--O sinal de - serve para remover as tags html do texto-->
+                </div>
+            </div>
+        </div>
+    </body>
+<%-include('partials/footer.ejs') %>
+

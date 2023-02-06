@@ -6,7 +6,7 @@
             <hr>
             <div class="jumbotron">
                 <h1 class="display-4">Sejam bem vindos!</h1>
-                <p class="lead">Este é um blog com o intuito de compartilhamento de ideias</p>
+                <p class="lead">Este é um blog com o intuito de compartilhamento de ideias.</p>
                 <hr class="my-4">
                 <p>Fique a vontade para ler ou escrever novos artigos.</p>
                 <p class="lead">
@@ -20,7 +20,7 @@
                         <h2><%= article.title %></h2>
                     </div>
                     <div class="card-body">
-                        <button class="btn btn-success">Ler artigo</button>
+                        <a href="/<%= article.slug %>" class="btn btn-success">Ler artigo</a>
                     </div>
                 </div>
                 <br>
