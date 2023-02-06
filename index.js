@@ -37,19 +37,23 @@ app.get("/", (req, res) => {
             ['id', 'DESC']
         ]
     }).then(articles => {
-        res.render("index", {articles: articles})
+        Category.findAll().then(categories => { //Buscando as categorias no banco de dados e enviando para a view de artigos
+            res.render("index", {articles: articles, categories: categories})
+        });
     });
 });
 
-app.get("/:slug", (req, res) => {
+app.get("/:slug", (req, res) => { 
     let slug = req.params.slug;
     Article.findOne({ //Procurar um artigo com a slug que o usuário informar na rota
         where:{
             slug: slug
         }
     }).then(article => {
-        if(article != undefined){
-            res.render("article", {article: article});
+        if(article != undefined){ 
+            Category.findAll().then(categories => { //Buscando as categorias no banco de dados e enviando para a view de artigos
+                res.render("article", {article: article, categories: categories})
+            })
         } else {
             res.redirect("/");
         }
