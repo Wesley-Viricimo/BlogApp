@@ -60,7 +60,27 @@ app.get("/:slug", (req, res) => {
     }).catch(err => { //Se der algum erro
         res.redirect("/");
     })
-})
+});
+
+app.get("/category/:slug", (req, res) => {
+    let slug = req.params.slug;
+    Category.findOne({
+        where: {
+            slug: slug
+        },
+        include: [{model: Article}] //Join para retornar todos os artigos que fazem parte da categoria selecionada
+    }).then( category => {
+        if(category != undefined) {
+            Category.findAll().then(categories => {
+                res.render("index", {articles: category.articles, categories: categories})
+            })
+        } else {
+            res.redirect("/");
+        }
+    }).catch(err => {
+        res.redirect("/");
+    })
+});
 
 app.listen(8080, () => {
     console.log("O servidor está rodando");
