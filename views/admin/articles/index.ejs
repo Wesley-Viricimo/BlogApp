@@ -23,6 +23,9 @@
                 <td><%= article.slug %></td>
                 <td><%= article.category.title %></td>
                 <td>
+                    <input type="hidden" name="idcategory" value="<%= article.category.id %>">
+                    <a href="/admin/articles/edit/<%= article.id %>" class="btn btn-warning">Editar</a> 
+
                     <!--Formulário para enviar o id do artigo para a rota /articles/delete-->
                     <form method="POST" action="/articles/delete" style="display: inline;" onsubmit="confirmarDelecao(event, this)"><!--onSubmit do formulário indica o que irá acontecer ao ser enviado-->
                         <input type="hidden" name="id" value="<%= article.id %>"><!--Input do tipo hidden que irá conter o valor do id do artigo desejado-->
