@@ -61,17 +61,19 @@ router.get("/admin/articles/edit/:id", (req, res) => {
     let id = req.params.id;
 
     if(isNaN(id)) { //Se o id não for um número
-        res.redirect("admin/categories");
+        res.redirect("admin/articles");
     }
 
     Article.findByPk(id).then(article => {
-        if(id != undefined) {
-            res.render("admin/articles/edit", {article: article});
+        if(article != undefined) {
+            Category.findAll().then(categories => {
+                res.render("admin/articles/edit", {article: article, categories: categories});
+            })
         } else {
-            res.redirect("admin/categories");
+            res.redirect("admin/articles");
         }
     }).catch(err => {
-        res.redirect("admin/categories");
+        res.redirect("admin/articles");
     });
 
 })

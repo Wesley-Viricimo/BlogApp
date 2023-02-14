@@ -5,19 +5,34 @@
             <hr>
             <div class="card">
                 <div class="card-header">
-                    <h2><%= article.title %></h2>
+                    <h2>Editar artigo</h2>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action=""><!--Envia o título da categoria que o usuário digitar para a rota /categories/save-->
-                    
-                        <textarea class="form-control" name="body" id="article"><%- article.body %></textarea> <br>
-                        <input type="hidden" name="id" value="<%- article.id %>">
+                    <form method="POST" action="/articles/save"><!--Envia o título da categoria que o usuário digitar para a rota /categories/save-->
+                        <input class="form-control" value="<%= article.title %>"> <br>
+                        <textarea class="form-control" name="body" id="article"></textarea> <br>
+                        <label>Selecione uma categoria para escrever o artigo</label>
+                        <select name="category" class="form-control">
+                            <% categories.forEach((category) => { %>
+                                <% if (category.id == article.categoryId) { %> 
+                                    <option value="<%= category.id %>" selected><%= category.title %></option>
+                                <% } else { %> 
+                                    <option value="<%= category.id %>"><%= category.title %></option>
+                                <% } %>
+                                
+                            <% }) %>
+                        </select> 
+                        <br>
                         <button class="btn btn-success">Atualizar</button>
                     </form>
                 </div>
             </div>
 
         </div>
+
+<div id="bodyarticle" style="display: none;"> <!--Carregando corpo do artigo em uma div-->
+    <%- article.body %>
+</div>
 
 <%-include('../../partials/footer.ejs') %>
 
@@ -28,8 +43,10 @@
     tinymce.init({ //Inicializando tinymce
         language: 'pt_BR',
         selector: "#article", //Referenciando o Id da textarea que irá receber a configuração do tinymce
-        plugins: 'advlist autolink link image lists print preview searchreplace fullscreen insertdatetime media save table paste emotions' //Adicionando plugins ao tinymce
-        
+        plugins: 'advlist autolink link image lists print preview searchreplace fullscreen insertdatetime media save table paste emotions', //Adicionando plugins ao tinymce
+        init_instance_callback: () => {
+            tinymce.get("article").setContent($("#bodyarticle").html());//Recuperando corpo do artigo da div e exibindo na text àrea
+        }
     });
 
 </script>
