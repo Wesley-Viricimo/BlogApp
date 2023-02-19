@@ -35,7 +35,8 @@ app.get("/", (req, res) => {
     Article.findAll({
         order:[
             ['id', 'DESC']
-        ]
+        ],
+        limit: 4
     }).then(articles => {
         Category.findAll().then(categories => { //Buscando as categorias no banco de dados e enviando para a view de artigos
             res.render("index", {articles: articles, categories: categories})

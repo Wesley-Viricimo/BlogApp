@@ -94,4 +94,43 @@ router.post("/articles/update", (req, res) => {
     });
 });
 
+router.get("/articles/page/:num", (req, res)=> {
+    let page = req.params.num; //Recebendo o número da página acessada como parâmetro da rota
+    let offset = 0; //Inicializando offset
+
+    if(isNaN(page) || page == 1) { //Se a página recebida não for um número ou se a página recebida for 1
+        offset = 0; 
+    } else { 
+        offset = (parseInt(page) - 1) * 4; //Convertendo a minha página para inteiro e subtraindo 1 e mutiplicando pelo limite de exibição de artigos por página
+    }
+ 
+    Article.findAndCountAll({
+        limit: 4, //Limite de exibição de artigos por página
+        offset: offset, //Passando a variável offset para dentro propriedade offset
+        order:[
+            ['id', 'DESC']
+        ]
+    }).then(articles => {
+        let next;
+
+        if(offset + 4 >= articles.count) { //Se a variável offset + 4 for maior que a quantidade máxima de artigos, significa que não tem mais artigos para serem exibidos em uma próxima página
+            next = false;
+        } else {
+            next = true;
+        }
+
+        let result = { //Criando um array que contém a página, a variável que controla se existem mais artigos para serem exibidos e os artigos
+            page: parseInt(page),
+            next : next,
+            articles : articles
+        }
+
+        Category.findAll().then(categories => { 
+            res.render("admin/articles/page", {result: result, categories: categories})//Enviando para a view o meu array e as categorias
+        })
+
+        
+    })
+})
+
 module.exports = router;
