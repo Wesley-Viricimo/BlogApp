@@ -30,7 +30,7 @@ router.post("/articles/save", (req, res) => {
             body: body,
             categoryId: category //Salvando na coluna categoryId o id da categoria no qual será escrito o artigo
         }).then(() => {
-            res.redirect("/admin/articles");//
+            res.redirect("/admin/articles");
         });
     } else {
         res.redirect("admin/articles/new");
