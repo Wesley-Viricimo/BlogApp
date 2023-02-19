@@ -1,0 +1,21 @@
+<%-include('../../partials/header.ejs') %>
+<%-include('../../partials/navbar.ejs') %>
+
+<div class="container">
+    <hr>
+    <div class="card mt-5"> <!-- Card com Margin top 5-->
+        <div class="card-header">
+            Criação de usuário
+        </div>
+        <div class="card-body">
+            <form action="/users/create" method="POST">
+                <input class="form-control" name="username" type="text" placeholder="Nome de usuário"> <br>
+                <input class="form-control" name="email" type="text" placeholder="email@exemplo.com"> <br>
+                <input class="form-control" name="password" type="password" placeholder="Senha"> <br>
+                <button class="btn btn-success btn-block" type="submit">Cadastrar</button> <!--Class btn block faz com que o botão preencha todo o conteúdo pai-->
+            </form>
+        </div>
+    </div>
+</div>
+
+<%-include('../../partials/footer.ejs') %>
