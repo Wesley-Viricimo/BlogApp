@@ -1,0 +1,50 @@
+<%-include('../../partials/header.ejs') %>
+<%-include('../../partials/navbar.ejs') %>
+
+<div class="container">
+    <hr>
+    <h2>Usuários</h2>
+    <a class="btn btn-success" href="/admin/users/create">Criar novo usuário</a><!--Botão irá redirecionar para a rota de criação de usuarios-->
+    <hr>
+    <table class="table table-bordered"><!--Criação da tabela HTML com estilização do bootstrap-->
+        <thead><!--Cabeçalho da tabela-->
+            <tr>
+                <th>ID</th><!--Criação do cabeçalho com as informações estáticas da tabela-->
+                <th>Usuário</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody><!--Corpo da tabela-->
+            <tr>
+                <% users.forEach(user => { %> <!--ForEach que irá percorrer por todos os registros da tabela de usuarios-->
+                    <tr>
+                        <th><%= user.id %></th> <!--Criação do corpo da tabela com as informações da tabela de usuarios-->
+                        <th><%= user.username %></th>
+                        <th><%= user.email %></th>
+                        <th><!--Início da coluna de ações da tabela HTML de usuários-->
+                           <a class="btn btn-warning">Editar</a> 
+                           
+                           <form method="POST" style="display: inline;" onsubmit="confirmarDelecao(event, this)"><!--onSubmit do formulário indica o que irá acontecer ao ser enviado-->
+                                <input type="hidden" name="id"><!--Input do tipo hidden que irá conter o valor do id do usuário desejado-->
+                                <button class="btn btn-danger">Deletar</button><!--Botão que irá deletar o usuário-->
+                           </form> 
+                        </th><!--Fim da coluna de ações-->
+                    </tr>
+                <% }) %><!--Fim do ForEach-->
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<%-include('../../partials/footer.ejs') %>
+
+<script>
+    function confirmarDelecao(event, form) { //Recebendo o evento e o formulário como parâmetros
+        event.preventDefault(); //Previnindo a ação comum de ser enviado o formulário
+        const decision = confirm("Você quer deletar este usuário?");
+        if(decision){ //Se da decisão for verdadeira
+            form.submit(); //Enviar o formulário
+        } 
+    }
+</script>
