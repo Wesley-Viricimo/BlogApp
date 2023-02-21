@@ -8,7 +8,7 @@ const Op = Sequelize.Op;
 router.get("/admin/users", (req, res) => {
     User.findAll().then(users => {
         res.render("admin/users/index", {users: users});
-    })
+    });
 });
 
 router.get("/admin/users/create", (req, res) => {
@@ -70,15 +70,20 @@ router.post("/authenticate", (req, res) => {
                     id: user.id,
                     username: user.username
                 }
-                res.json(req.session.user);
+                res.redirect("/admin/articles");
             } else { // Se a validação de senha retornar falso > Senha incorreta
-                res.redirect("/login");
+                res.redirect("/admin/articles");
             }
         } else { //Se usuário não existir
             res.redirect("/login");
         }
     })
 
-})
+});
+
+router.get("/logout", (req, res) => {
+    res.session.user = undefined;
+    res.redirect("/");
+});
 
 module.exports = router;
