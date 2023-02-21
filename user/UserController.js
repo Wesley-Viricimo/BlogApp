@@ -48,4 +48,37 @@ router.post("/users/create", (req, res) => {
     });
 });
 
+router.get("/login", (req, res) => {
+    res.render("admin/users/login");
+});
+
+router.post("/authenticate", (req, res) => {
+    
+    const username = req.body.username;
+    const password = req.body.password;
+
+    User.findOne({
+        where: {
+            username: username
+        }
+    }).then(user => {
+        if(user != undefined) { //Se o usuário for diferente de undefined ele já está criado
+            const validationPassword = bcrypt.compareSync(password, user.password); //Compara o hash da senha salva no banco com a senha informada pelo usuário
+
+            if(validationPassword) { //Se a validação de senha retornar verdadeiro > Senha correta
+                req.session.user = { //Salvar as informações do usuário em uma sessão
+                    id: user.id,
+                    username: user.username
+                }
+                res.json(req.session.user);
+            } else { // Se a validação de senha retornar falso > Senha incorreta
+                res.redirect("/login");
+            }
+        } else { //Se usuário não existir
+            res.redirect("/login");
+        }
+    })
+
+})
+
 module.exports = router;

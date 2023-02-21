@@ -1,0 +1,20 @@
+<%-include('../../partials/header.ejs') %>
+<%-include('../../partials/navbar.ejs') %>
+
+<div class="container">
+    <hr>
+    <div class="card mt-5"> <!-- Card com Margin top 5-->
+        <div class="card-header">
+            Login de admin
+        </div>
+        <div class="card-body">
+            <form action="/authenticate" method="POST">
+                <input class="form-control" name="username" type="text" placeholder="Nome de usuário"> <br>
+                <input class="form-control" name="password" type="password" placeholder="Senha"> <br>
+                <button class="btn btn-success btn-block" type="submit">Entrar</button> <!--Class btn block faz com que o botão preencha todo o conteúdo pai-->
+            </form>
+        </div>
+    </div>
+</div>
+
+<%-include('../../partials/footer.ejs') %>
