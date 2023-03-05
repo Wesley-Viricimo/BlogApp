@@ -6,6 +6,14 @@ const User = connection.define('users',{
         type: Sequelize.STRING,
         allowNull: false
     }, 
+    office: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    level: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
     email: {
         type: Sequelize.STRING,
         allowNull: false

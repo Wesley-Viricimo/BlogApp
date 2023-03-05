@@ -9,9 +9,6 @@
                 <p class="lead">Este é um blog com o intuito de compartilhamento de ideias.</p>
                 <hr class="my-4">
                 <p>Fique a vontade para ler ou escrever novos artigos.</p>
-                <p class="lead">
-                  <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-                </p>
               </div>
             <hr>
             <% articles.forEach(article => { %>
@@ -20,7 +17,7 @@
                         <h2><%= article.title %></h2>
                     </div>
                     <div class="card-body">
-                        <a href="/<%= article.slug %>" class="btn btn-success">Ler artigo</a>
+                        <a href="/<%= article.slug %>" class="btn btn-primary btn-lg">Ler artigo</a>
                     </div>
                 </div>
                 <br>

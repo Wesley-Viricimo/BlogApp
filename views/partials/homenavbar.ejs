@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="/">
         Blog App
     </a>
@@ -7,11 +7,20 @@
         <li class="nav-item">
             <a class="nav-link" href="/">Home</a>
         </li>
-        <% categories.forEach(category => { %>
-            <li class="nav-item">
-                <a class="nav-link" href="/category/<%= category.slug %>"><%= category.title %></a><!--Carregando categorias na navbar-->
-            </li>
-        <% }) %>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Categorias
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <% categories.forEach(category => { %>
+                    <a class="dropdown-item" href="/category/<%= category.slug %>"><%= category.title %></a><!--Carregando categorias na navbar-->
+                    <div class="dropdown-divider"></div>
+                <% }) %>
+            </div>
+          </li>
     </ul>
-    
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Buscar categoria..." aria-label="Search">
+        <button class="btn btn-light" type="submit">Buscar</button>
+      </form>
 </nav>

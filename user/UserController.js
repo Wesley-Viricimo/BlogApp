@@ -4,8 +4,9 @@ const User = require("./User");
 const bcrypt = require('bcryptjs');
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
+const adminAuth = require("../middlewares/adminAuth");
 
-router.get("/admin/users", (req, res) => {
+router.get("/admin/users", adminAuth, (req, res) => {
     User.findAll().then(users => {
         res.render("admin/users/index", {users: users});
     });
@@ -16,9 +17,13 @@ router.get("/admin/users/create", (req, res) => {
 });
 
 router.post("/users/create", (req, res) => {
-    let username = req.body.username;
-    let email = req.body.email;
-    let password = req.body.password;
+    const username = req.body.username;
+    const email = req.body.email;
+    const password = req.body.password;
+    const userUp = username.toUpperCase();
+    let office;
+    let level;
+
 
     User.findOne({ //Verifica se já existem usuários ou emails salvos iguais ao que o usuário informar
         where: { 
@@ -33,8 +38,21 @@ router.post("/users/create", (req, res) => {
             let salt = bcrypt.genSaltSync(10);
             let hash = bcrypt.hashSync(password, salt); //Utilizando a biblioteca bcrypt para gerar um hash com a senha do usuário;
 
+            if(userUp == "MODERADOR"){
+                office = "MODERADOR";
+                level = 1;
+            } else if(userUp == "ADMINISTRADOR") {
+                office = "ADMINISTRADOR";
+                level = 2;
+            } else {
+                office = "USUÁRIO";
+                level = 3;
+            }
+
             User.create({
                 username: username,
+                office: office,
+                level: level,
                 email: email,
                 password: hash
             }).then(() => {
@@ -68,7 +86,8 @@ router.post("/authenticate", (req, res) => {
             if(validationPassword) { //Se a validação de senha retornar verdadeiro > Senha correta
                 req.session.user = { //Salvar as informações do usuário em uma sessão
                     id: user.id,
-                    username: user.username
+                    username: user.username,
+                    level: user.level
                 }
                 res.redirect("/admin/articles");
             } else { // Se a validação de senha retornar falso > Senha incorreta
